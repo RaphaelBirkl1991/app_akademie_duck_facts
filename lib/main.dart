@@ -9,7 +9,19 @@ void main() {
 
 const factUri = "https://03vpefsitf.execute-api.eu-west-1.amazonaws.com/prod/";
 
-// Holt das Textgraffi aus dem Inet und gibt es zurück
+// Datenklasse (speichert Daten)
+class DuckFact {
+  int feistynessRating;
+  bool quack;
+  String fact;
+
+  DuckFact(
+      {required this.feistynessRating,
+      required this.quack,
+      required this.fact});
+}
+
+// Holt das Textgraffe aus dem Inet und gibt es zurück
 
 Future<String> getDataFromApi() async {
   final Response response = await get(Uri.parse(factUri));
@@ -23,6 +35,13 @@ Future<String> getDuckFact() async {
   final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
   print(jsonMap);
   final String duckFact = jsonMap["fact"];
+
+  final int feistynessRating = jsonMap["feistynessRating"];
+  final bool quack = jsonMap["quack"];
+  final String fact = jsonMap["fact"];
+
+  final DuckFact newDuckFact =
+      DuckFact(feistynessRating: -1, quack: false, fact: duckFact);
   return duckFact;
 }
 
